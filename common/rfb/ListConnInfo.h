@@ -31,7 +31,10 @@ namespace rfb {
 
     void Clear() {
       conn.clear();
+      id.clear();
       IP_address.clear();
+      endpoint.clear();
+      user.clear();
       time_conn.clear();
       status.clear();
     }
@@ -40,7 +43,10 @@ namespace rfb {
 
     void iBegin() {
       ci = conn.begin();
+      ii = id.begin();
       Ii = IP_address.begin();
+      ei = endpoint.begin();
+      ui = user.begin();
       ti = time_conn.begin();
       si = status.begin();
     }
@@ -49,14 +55,21 @@ namespace rfb {
 
     void iNext() {
       ci++;
+      ii++;
       Ii++;
+      ei++;
+      ui++;
       ti++;
       si++;
     }
 
-    void addInfo(void* Conn, char* IP, char* Time, int Status) {
+    void addInfo(void* Conn, int Id, char* IP, char* Endpoint, char *User,
+                 char* Time, int Status) {
       conn.push_back(Conn);
+      id.push_back(Id);
       IP_address.push_back(strDup(IP));
+      endpoint.push_back(strDup(Endpoint));
+      user.push_back(strdup(User));
       time_conn.push_back(strDup(Time));
       status.push_back(Status);
     }
@@ -80,6 +93,9 @@ namespace rfb {
     }
 
     void* iGetConn() { return *ci;}
+    int iGetId() { return *ii;}
+    char* iGetEndpoint() { return *ei;}
+    char* iGetUser() { return *ui;}
 
     int iGetStatus() { return *si;}
 
@@ -97,7 +113,10 @@ namespace rfb {
     void iAdd (ListConnInfo* InputList) {
       char* buf[3];
       InputList->iGetCharInfo(buf);
-      addInfo(InputList->iGetConn(), buf[0], buf[1], InputList->iGetStatus());
+      // iGetCharInfo ??
+      addInfo(InputList->iGetConn(), InputList->iGetId(), buf[0],
+              InputList->iGetEndpoint(), InputList->iGetUser(), buf[1],
+              InputList->iGetStatus());
     }
 
     void setDisable(bool disable) {disableClients = disable;}
@@ -112,11 +131,17 @@ namespace rfb {
 
   private:
     std::list<void*> conn;
+    std::list<int> id;
     std::list<char*> IP_address;
+    std::list<char*> endpoint;
+    std::list<char*> user;
     std::list<char*> time_conn;
     std::list<int> status;
     std::list<void*>::iterator ci;
+    std::list<int>::iterator ii;
     std::list<char*>::iterator Ii;
+    std::list<char*>::iterator ei;
+    std::list<char*>::iterator ui;
     std::list<char*>::iterator ti;
     std::list<int>::iterator si;
     bool disableClients;

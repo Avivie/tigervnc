@@ -175,6 +175,8 @@ namespace rfb {
 
     rdr::S32 getPreferredEncoding() { return preferredEncoding; }
 
+    const char *getUserName();
+
   protected:
     void setState(stateEnum s) { state_ = s; }
 

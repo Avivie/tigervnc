@@ -697,8 +697,9 @@ void VNCServerST::getConnInfo(ListConnInfo * listConn)
     return;
   std::list<VNCSConnectionST*>::iterator i;
   for (i = clients.begin(); i != clients.end(); i++)
-    listConn->addInfo((void*)(*i), (*i)->getSock()->getPeerAddress(),
-                      (*i)->getStartTime(), (*i)->getStatus());
+    listConn->addInfo((void*)(*i), (*i)->getId(),
+                      (*i)->getSock()->getPeerAddress(), (char *)(*i)->getPeerEndpoint(),
+                      (char *)(*i)->getUserName(), (*i)->getStartTime(), (*i)->getStatus());
 }
 
 void VNCServerST::setConnStatus(ListConnInfo* listConn)

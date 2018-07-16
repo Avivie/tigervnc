@@ -103,6 +103,7 @@ namespace rfb {
     bool needRenderedCursor();
 
     network::Socket* getSock() { return sock; }
+    int getId() { return id; }
     void add_changed(const Region& region) { updates.add_changed(region); }
     void add_copied(const Region& dest, const Point& delta) {
       updates.add_copied(dest, delta);
@@ -178,6 +179,7 @@ namespace rfb {
     void setLEDState(unsigned int state);
     void setSocketTimeouts();
 
+    int id;
     network::Socket* sock;
     CharArray peerEndpoint;
     bool reverseConnection;

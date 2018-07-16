@@ -296,6 +296,13 @@ void SConnection::authSuccess()
 {
 }
 
+const char *SConnection::getUserName()
+{
+  const char *user = ssecurity ? ssecurity->getUserName() : NULL;
+
+  return user ?: "";
+}
+
 void SConnection::queryConnection(const char* userName)
 {
   approveConnection(true);
